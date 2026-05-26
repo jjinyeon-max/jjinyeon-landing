@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>찐연 — 우리, 찐연일까?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Pretendard:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #080714;
+    --navy2: #0f0d24;
+    --navy3: #17143a;
+    --rose: #e8698a;
+    --rose-light: #f2a0b6;
+    --rose-dim: rgba(232,105,138,0.15);
+    --gold: #d4a96a;
+    --gold-light: #f0d5a8;
+    --cream: #fdf6ee;
+    --text-main: #f5eff8;
+    --text-sub: rgba(245,239,248,0.6);
+    --text-dim: rgba(245,239,248,0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--text-main);
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+
+  /* ── 별 배경 ── */
+  #starfield {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    overflow: hidden;
+  }
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle var(--d, 3s) ease-in-out infinite;
+    opacity: var(--o, 0.4);
+  }
+  @keyframes twinkle {
+    0%,100% { opacity: var(--o, 0.4); transform: scale(1); }
+    50%      { opacity: calc(var(--o, 0.4) * 0.3); transform: scale(0.7); }
+  }
+
+  /* ── 공통 레이아웃 ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+  section { position: relative; z-index: 1; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 20px 0;
+    background: linear-gradient(to bottom, rgba(8,7,20,0.9) 0%, transparent 100%);
+    backdrop-filter: blur(8px);
+  }
+  nav .inner {
+    max-width: 1100px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 22px; font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: var(--rose); }
+  .nav-cta {
+    background: var(--rose);
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-size: 14px; font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--rose-light); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+  }
+  .hero-inner { max-width: 720px; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(232,105,138,0.12);
+    border: 1px solid rgba(232,105,138,0.3);
+    padding: 8px 18px; border-radius: 999px;
+    font-size: 13px; color: var(--rose-light);
+    margin-bottom: 40px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--rose);
+    animation: pulse 2s ease infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  .hero-title {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: clamp(48px, 8vw, 86px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+  .hero-title .accent { color: var(--rose); }
+  .hero-title .gold   { color: var(--gold); }
+
+  .hero-sub {
+    font-size: 18px; color: var(--text-sub);
+    max-width: 520px; margin: 0 auto 48px;
+    font-weight: 300; line-height: 1.8;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .btn-primary {
+    background: var(--rose);
+    color: white; border: none;
+    padding: 16px 34px; border-radius: 999px;
+    font-size: 16px; font-weight: 500;
+    cursor: pointer; transition: all 0.25s;
+    font-family: inherit;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { background: #f07a97; transform: translateY(-2px); box-shadow: 0 12px 32px rgba(232,105,138,0.35); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-sub); border: 1px solid rgba(255,255,255,0.15);
+    padding: 16px 34px; border-radius: 999px;
+    font-size: 16px; font-weight: 400;
+    cursor: pointer; transition: all 0.25s;
+    font-family: inherit;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.35); color: var(--text-main); }
+
+  /* 스크롤 힌트 */
+  .scroll-hint {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: var(--text-dim); font-size: 12px;
+    animation: fadeUp 1s 0.6s ease both;
+  }
+  .scroll-arrow {
+    width: 20px; height: 20px;
+    border-right: 1.5px solid var(--text-dim);
+    border-bottom: 1.5px solid var(--text-dim);
+    transform: rotate(45deg);
+    animation: bounce 2s ease infinite;
+  }
+  @keyframes bounce {
+    0%,100% { transform: rotate(45deg) translateY(0); }
+    50%      { transform: rotate(45deg) translateY(4px); }
+  }
+
+  /* ── 기능 섹션 ── */
+  #features { padding: 120px 0; }
+  .section-label {
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--rose); font-weight: 500; margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700; line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .section-sub { color: var(--text-sub); font-size: 17px; max-width: 480px; font-weight: 300; }
+
+  .features-header { margin-bottom: 72px; }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .feat-card {
+    background: var(--navy2);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 20px;
+    padding: 40px 36px;
+    transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .feat-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at top left, var(--card-glow, transparent) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .feat-card:hover { border-color: rgba(255,255,255,0.15); transform: translateY(-4px); }
+  .feat-card:hover::before { opacity: 1; }
+
+  .feat-card.rose  { --card-glow: rgba(232,105,138,0.12); }
+  .feat-card.gold  { --card-glow: rgba(212,169,106,0.12); }
+  .feat-card.blue  { --card-glow: rgba(120,150,255,0.12); }
+
+  .feat-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin-bottom: 24px;
+  }
+  .feat-icon.rose { background: rgba(232,105,138,0.15); }
+  .feat-icon.gold { background: rgba(212,169,106,0.15); }
+  .feat-icon.blue { background: rgba(120,150,255,0.15); }
+
+  .feat-tag {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    font-weight: 600; margin-bottom: 12px;
+  }
+  .feat-tag.rose { color: var(--rose); }
+  .feat-tag.gold { color: var(--gold); }
+  .feat-tag.blue { color: #9ab0ff; }
+
+  .feat-title {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 24px; font-weight: 700; margin-bottom: 14px; line-height: 1.3;
+  }
+  .feat-desc { color: var(--text-sub); font-size: 15px; line-height: 1.75; font-weight: 300; }
+
+  /* ── HOW IT WORKS ── */
+  #how { padding: 120px 0; }
+  .how-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+  }
+  @media (max-width: 768px) { .how-inner { grid-template-columns: 1fr; gap: 48px; } }
+
+  .steps { display: flex; flex-direction: column; gap: 32px; }
+  .step { display: flex; gap: 20px; align-items: flex-start; }
+  .step-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--rose-dim); border: 1px solid rgba(232,105,138,0.3);
+    color: var(--rose-light); font-size: 13px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .step-text h4 { font-size: 17px; font-weight: 500; margin-bottom: 6px; }
+  .step-text p  { color: var(--text-sub); font-size: 14px; font-weight: 300; line-height: 1.7; }
+
+  /* 폰 목업 */
+  .phone-mockup {
+    position: relative; display: flex; justify-content: center;
+  }
+  .phone-frame {
+    width: 260px;
+    background: var(--navy2);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 36px;
+    padding: 16px;
+    position: relative;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+  }
+  .phone-screen {
+    background: var(--navy3);
+    border-radius: 24px;
+    padding: 24px 20px;
+    min-height: 460px;
+    overflow: hidden;
+    position: relative;
+  }
+  .phone-notch {
+    width: 80px; height: 8px; background: var(--navy);
+    border-radius: 999px; margin: 0 auto 20px;
+  }
+  .phone-app-header {
+    text-align: center; margin-bottom: 24px;
+  }
+  .phone-app-header .app-name {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 20px; font-weight: 800; color: var(--text-main);
+  }
+  .phone-app-header .app-name span { color: var(--rose); }
+  .phone-app-header p { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+
+  .phone-scan-area {
+    margin: 20px auto;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(232,105,138,0.3);
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .scan-ring {
+    position: absolute; inset: -12px;
+    border-radius: 50%;
+    border: 1px solid rgba(232,105,138,0.15);
+    animation: scanRing 3s ease infinite;
+  }
+  .scan-ring:nth-child(2) { inset: -24px; animation-delay: 1s; }
+  .scan-ring:nth-child(3) { inset: -36px; animation-delay: 2s; }
+  @keyframes scanRing {
+    0% { opacity: 0.7; transform: scale(0.95); }
+    50% { opacity: 0.2; transform: scale(1); }
+    100% { opacity: 0.7; transform: scale(0.95); }
+  }
+  .scan-center {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: var(--rose-dim);
+    border: 1.5px solid var(--rose);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+  }
+
+  .phone-nearby {
+    margin-top: 12px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .nearby-person {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px; padding: 10px 12px;
+    animation: fadeIn 0.5s ease both;
+  }
+  .nearby-person:nth-child(2) { animation-delay: 0.2s; }
+  .nearby-person:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateX(8px); } to { opacity: 1; } }
+
+  .np-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0;
+  }
+  .np-info { flex: 1; }
+  .np-name { font-size: 12px; font-weight: 500; color: var(--text-main); }
+  .np-dist { font-size: 10px; color: var(--text-dim); }
+  .np-score {
+    font-size: 11px; font-weight: 600;
+    color: var(--rose-light);
+    background: var(--rose-dim);
+    padding: 3px 8px; border-radius: 999px;
+  }
+
+  /* ── 이메일 캡처 ── */
+  #signup { padding: 120px 0; }
+  .signup-box {
+    background: var(--navy2);
+    border: 1px solid rgba(232,105,138,0.2);
+    border-radius: 28px;
+    padding: 72px 60px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .signup-box::before {
+    content: '';
+    position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+    width: 400px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,105,138,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .signup-emoji { font-size: 48px; margin-bottom: 20px; }
+  .signup-title {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: clamp(28px, 4vw, 44px); font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .signup-sub { color: var(--text-sub); font-size: 16px; margin-bottom: 40px; font-weight: 300; }
+
+  .email-form {
+    display: flex; gap: 12px; max-width: 460px; margin: 0 auto;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .email-input {
+    flex: 1; min-width: 220px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--text-main);
+    padding: 14px 20px; border-radius: 999px;
+    font-size: 15px; outline: none;
+    font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  .email-input::placeholder { color: var(--text-dim); }
+  .email-input:focus { border-color: rgba(232,105,138,0.5); }
+
+  .signup-note { margin-top: 16px; font-size: 12px; color: var(--text-dim); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 40px 0;
+    position: relative; z-index: 1;
+  }
+  footer .inner {
+    max-width: 1100px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  footer .logo { font-size: 18px; }
+  footer p { font-size: 13px; color: var(--text-dim); }
+
+  /* ── 공유 카드 미리보기 ── */
+  #share { padding: 120px 0; }
+  .share-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .share-card {
+    background: linear-gradient(135deg, var(--navy2) 0%, #1a0e2e 100%);
+    border: 1px solid rgba(232,105,138,0.2);
+    border-radius: 24px; padding: 32px 28px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .share-card::after {
+    content: '찐연';
+    font-family: 'Nanum Myeongjo', serif;
+    position: absolute; bottom: -10px; right: 12px;
+    font-size: 64px; font-weight: 800;
+    opacity: 0.04; color: white; pointer-events: none;
+  }
+  .card-compat {
+    font-size: 48px; font-weight: 800;
+    font-family: 'Nanum Myeongjo', serif;
+    color: var(--rose); margin-bottom: 8px;
+  }
+  .card-names { font-size: 15px; color: var(--text-sub); margin-bottom: 16px; }
+  .card-bar {
+    height: 6px; background: rgba(255,255,255,0.08);
+    border-radius: 999px; overflow: hidden; margin-bottom: 16px;
+  }
+  .card-bar-fill {
+    height: 100%; border-radius: 999px;
+    background: linear-gradient(to right, var(--rose), var(--gold));
+    transition: width 1s ease;
+  }
+  .card-desc { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+  .card-share-btn {
+    margin-top: 20px;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(232,105,138,0.12);
+    border: 1px solid rgba(232,105,138,0.25);
+    color: var(--rose-light); border-radius: 999px;
+    padding: 8px 18px; font-size: 13px; cursor: pointer;
+    transition: all 0.2s; font-family: inherit;
+  }
+  .card-share-btn:hover { background: rgba(232,105,138,0.2); }
+
+  /* ── 애니메이션 ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── 반응형 ── */
+  @media (max-width: 600px) {
+    .signup-box { padding: 48px 24px; }
+    .hero-actions { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 별 배경 -->
+<div id="starfield"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="inner">
+    <div class="logo">찐<span>연</span></div>
+    <a href="#signup" class="nav-cta">출시 알림 받기</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <div class="badge-dot"></div>
+      곧 출시됩니다 — 사전 등록 받는 중
+    </div>
+
+    <h1 class="hero-title">
+      우리,<br>
+      <span class="accent">찐연</span>일까?
+    </h1>
+
+    <p class="hero-sub">
+      사주가 말해주는 진짜 인연.<br>
+      지금 이 순간, 근처에 있는 사람과의 궁합을 확인해보세요.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#signup" class="btn-primary">✨ 출시 알림 받기</a>
+      <a href="#features" class="btn-ghost">어떤 앱인가요?</a>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>스크롤</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="features-header reveal">
+      <p class="section-label">Features</p>
+      <h2 class="section-title">찐연이 하는 일</h2>
+      <p class="section-sub">사주·궁합·AI 상담을 하나의 앱으로</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feat-card rose reveal">
+        <div class="feat-icon rose">🔮</div>
+        <p class="feat-tag rose">사주 분석</p>
+        <h3 class="feat-title">생년월일로 보는<br>나의 사주팔자</h3>
+        <p class="feat-desc">태어난 날의 천간지지를 분석해 나만의 사주 명식을 만들어드립니다. 오늘의 운세부터 올해의 흐름까지 한눈에 확인하세요.</p>
+      </div>
+
+      <div class="feat-card gold reveal">
+        <div class="feat-icon gold">📡</div>
+        <p class="feat-tag gold">근거리 궁합 — 메인 기능</p>
+        <h3 class="feat-title">지금 이 순간<br>근처의 찐연 탐색</h3>
+        <p class="feat-desc">블루투스로 반경 10m 안의 찐연 사용자를 감지합니다. 연인, 친구, 동료… 서로의 사주 궁합을 실시간으로 확인해보세요.</p>
+      </div>
+
+      <div class="feat-card blue reveal">
+        <div class="feat-icon blue">💬</div>
+        <p class="feat-tag blue">AI 역술 상담</p>
+        <h3 class="feat-title">언제든 물어보는<br>나만의 역술가</h3>
+        <p class="feat-desc">AI가 나의 사주 데이터를 기반으로 연애운, 직업운, 재물운을 상담해드립니다. 진짜 역술가처럼, 24시간 언제든지.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <div class="how-inner">
+      <div>
+        <div class="reveal">
+          <p class="section-label">How it works</p>
+          <h2 class="section-title">찐연 사용법</h2>
+          <p class="section-sub" style="margin-bottom: 48px;">세 단계면 충분합니다</p>
+        </div>
+
+        <div class="steps">
+          <div class="step reveal">
+            <div class="step-num">1</div>
+            <div class="step-text">
+              <h4>내 사주 등록</h4>
+              <p>생년월일과 태어난 시간을 입력하면 나만의 사주 명식이 완성됩니다. 닉네임만으로 익명 가능.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <div class="step-num">2</div>
+            <div class="step-text">
+              <h4>근처 탐색 시작</h4>
+              <p>스캔 버튼 하나로 주변의 찐연 사용자를 탐지합니다. 상대방도 앱이 있어야 연결됩니다.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <div class="step-num">3</div>
+            <div class="step-text">
+              <h4>궁합 결과 확인 & 공유</h4>
+              <p>사주 기반 궁합 점수와 상세 해석을 카드로 받아보세요. 카카오톡으로 바로 공유 가능.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 폰 목업 -->
+      <div class="phone-mockup reveal">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-notch"></div>
+            <div class="phone-app-header">
+              <div class="app-name">찐<span>연</span></div>
+              <p>근처 인연 탐색 중...</p>
+            </div>
+            <div class="phone-scan-area">
+              <div class="scan-ring"></div>
+              <div class="scan-ring"></div>
+              <div class="scan-ring"></div>
+              <div class="scan-center">📡</div>
+            </div>
+            <div class="phone-nearby">
+              <div class="nearby-person">
+                <div class="np-avatar" style="background:rgba(232,105,138,0.15)">🌸</div>
+                <div class="np-info">
+                  <div class="np-name">민지 님</div>
+                  <div class="np-dist">2m 거리 · 무진생</div>
+                </div>
+                <div class="np-score">88점</div>
+              </div>
+              <div class="nearby-person">
+                <div class="np-avatar" style="background:rgba(212,169,106,0.15)">🌙</div>
+                <div class="np-info">
+                  <div class="np-name">수현 님</div>
+                  <div class="np-dist">5m 거리 · 임오생</div>
+                </div>
+                <div class="np-score">74점</div>
+              </div>
+              <div class="nearby-person">
+                <div class="np-avatar" style="background:rgba(120,150,255,0.15)">⭐</div>
+                <div class="np-info">
+                  <div class="np-name">지은 님</div>
+                  <div class="np-dist">9m 거리 · 경인생</div>
+                </div>
+                <div class="np-score">91점</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 공유 카드 -->
+<section id="share">
+  <div class="container">
+    <div class="reveal" style="text-align: center; margin-bottom: 60px;">
+      <p class="section-label">Share</p>
+      <h2 class="section-title">공유하고 싶어지는 결과 카드</h2>
+      <p class="section-sub" style="margin: 0 auto;">카카오톡에 공유하면 바이럴이 시작됩니다</p>
+    </div>
+
+    <div class="share-grid">
+      <div class="share-card reveal">
+        <div class="card-compat">88점</div>
+        <div class="card-names">지은 💕 민준</div>
+        <div class="card-bar"><div class="card-bar-fill" style="width:88%"></div></div>
+        <div class="card-desc">목화(木火) 상생의 기운이 넘칩니다. 서로를 밝혀주는 천생연분.</div>
+        <button class="card-share-btn">📤 카카오톡 공유</button>
+      </div>
+
+      <div class="share-card reveal">
+        <div class="card-compat">74점</div>
+        <div class="card-names">수현 💕 태양</div>
+        <div class="card-bar"><div class="card-bar-fill" style="width:74%"></div></div>
+        <div class="card-desc">성격은 달라도 음양의 균형이 좋습니다. 노력하면 더 깊어지는 인연.</div>
+        <button class="card-share-btn">📤 카카오톡 공유</button>
+      </div>
+
+      <div class="share-card reveal">
+        <div class="card-compat">91점</div>
+        <div class="card-names">찐연 데이 🎊</div>
+        <div class="card-bar"><div class="card-bar-fill" style="width:91%"></div></div>
+        <div class="card-desc">사주가 인정한 찐연입니다! 이 점수는 상위 3%에 해당합니다.</div>
+        <button class="card-share-btn">📤 카카오톡 공유</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 이메일 캡처 -->
+<section id="signup">
+  <div class="container">
+    <div class="signup-box reveal">
+      <div class="signup-emoji">🔮</div>
+      <h2 class="signup-title">가장 먼저 만나보세요</h2>
+      <p class="signup-sub">베타 출시 때 가장 먼저 알려드릴게요.<br>사전 등록자에게만 특별 혜택을 드립니다.</p>
+
+      <form class="email-form" onsubmit="handleSignup(event)">
+        <input type="email" class="email-input" placeholder="이메일 주소 입력" id="emailInput" required>
+        <button type="submit" class="btn-primary">알림 받기</button>
+      </form>
+
+      <p class="signup-note" id="signupNote">🔒 스팸 없음 · 출시 소식만 드립니다</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="inner">
+    <div class="logo">찐<span>연</span></div>
+    <p>© 2025 JjinYeon · 우리, 찐연일까?</p>
+  </div>
+</footer>
+
+<script>
+/* 별 생성 */
+const sf = document.getElementById('starfield');
+for (let i = 0; i < 120; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random() * 2.5 + 0.5;
+  s.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${Math.random()*100}%; top:${Math.random()*100}%;
+    --o:${Math.random()*0.5+0.1};
+    --d:${Math.random()*4+2}s;
+    animation-delay:${Math.random()*5}s;
+  `;
+  sf.appendChild(s);
+}
+
+/* 스크롤 reveal */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* 이메일 등록 */
+function handleSignup(e) {
+  e.preventDefault();
+  const email = document.getElementById('emailInput').value;
+  const note = document.getElementById('signupNote');
+  note.textContent = `✅ ${email} — 등록 완료! 출시 때 가장 먼저 알려드릴게요 🎉`;
+  note.style.color = '#e8698a';
+  document.getElementById('emailInput').value = '';
+}
+</script>
+</body>
+</html>
