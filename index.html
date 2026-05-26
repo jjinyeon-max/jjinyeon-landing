@@ -314,7 +314,7 @@ footer p { font-size:13px; color:var(--text-dim); }
 
 <script>
 // ── API 설정 ──
-const CLAUDE_API_KEY = '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';
+
 
 
 // ── 별 생성 ──
@@ -390,19 +390,11 @@ async function getSaju() {
 사주 명식의 천간지지를 간략히 언급하고, ${name}님에게 맞춤화된 느낌이 들도록 이름을 자연스럽게 넣어주세요. 너무 딱딱하지 않게, MZ세대가 공감할 수 있는 표현도 적절히 섞어주세요.`;
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+const res = await fetch('/api/saju', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': CLAUDE_API_KEY,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
     });
 
     if(!res.ok) {
