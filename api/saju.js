@@ -21,7 +21,8 @@ export default async function handler(req, res) {
       })
     });
     const data = await response.json();
-    const text = data?.content?.[0]?.text || '결과를 가져올 수 없습니다.';
+    console.log('API response:', JSON.stringify(data));
+const text = data?.content?.[0]?.text || data?.error?.message || '결과를 가져올 수 없습니다.';
     return res.status(200).json({ text });
   } catch (error) {
     return res.status(500).json({ error: error.message });
