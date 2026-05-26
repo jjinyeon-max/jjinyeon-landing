@@ -7,12 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Pretendard:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --navy:#080714;--navy2:#0f0d24;--navy3:#17143a;
-  --rose:#e8698a;--rose-light:#f2a0b6;--rose-dim:rgba(232,105,138,0.15);
-  --gold:#d4a96a;--gold-light:#f0d5a8;
-  --text-main:#f5eff8;--text-sub:rgba(245,239,248,0.6);--text-dim:rgba(245,239,248,0.35);
-}
+:root{--navy:#080714;--navy2:#0f0d24;--navy3:#17143a;--rose:#e8698a;--rose-light:#f2a0b6;--rose-dim:rgba(232,105,138,0.15);--gold:#d4a96a;--gold-light:#f0d5a8;--text-main:#f5eff8;--text-sub:rgba(245,239,248,0.6);--text-dim:rgba(245,239,248,0.35);}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{background:var(--navy);color:var(--text-main);font-family:'Pretendard','Apple SD Gothic Neo',sans-serif;overflow-x:hidden;line-height:1.7;}
@@ -38,7 +33,7 @@ nav .inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-item
 .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp 0.8s 0.3s ease both;}
 .btn-primary{background:var(--rose);color:white;border:none;padding:16px 34px;border-radius:999px;font-size:16px;font-weight:500;cursor:pointer;transition:all 0.25s;font-family:inherit;text-decoration:none;display:inline-block;}
 .btn-primary:hover{background:#f07a97;transform:translateY(-2px);box-shadow:0 12px 32px rgba(232,105,138,0.35);}
-.btn-ghost{background:transparent;color:var(--text-sub);border:1px solid rgba(255,255,255,0.15);padding:16px 34px;border-radius:999px;font-size:16px;font-weight:400;cursor:pointer;transition:all 0.25s;font-family:inherit;text-decoration:none;display:inline-block;}
+.btn-ghost{background:transparent;color:var(--text-sub);border:1px solid rgba(255,255,255,0.15);padding:16px 34px;border-radius:999px;font-size:16px;cursor:pointer;transition:all 0.25s;font-family:inherit;text-decoration:none;display:inline-block;}
 .btn-ghost:hover{border-color:rgba(255,255,255,0.35);color:var(--text-main);}
 .scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-dim);font-size:12px;}
 .scroll-arrow{width:20px;height:20px;border-right:1.5px solid var(--text-dim);border-bottom:1.5px solid var(--text-dim);transform:rotate(45deg);animation:bounce 2s ease infinite;}
@@ -67,7 +62,6 @@ nav .inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-item
 .feat-desc{color:var(--text-sub);font-size:15px;line-height:1.75;font-weight:300;}
 #signup{padding:120px 0;position:relative;z-index:1;}
 .signup-box{background:var(--navy2);border:1px solid rgba(232,105,138,0.2);border-radius:28px;padding:72px 60px;text-align:center;position:relative;overflow:hidden;}
-.signup-box::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(232,105,138,0.08),transparent 70%);pointer-events:none;}
 .signup-emoji{font-size:48px;margin-bottom:20px;}
 .signup-title{font-family:'Nanum Myeongjo',serif;font-size:clamp(28px,4vw,44px);font-weight:700;margin-bottom:14px;}
 .signup-sub{color:var(--text-sub);font-size:16px;margin-bottom:40px;font-weight:300;}
@@ -116,7 +110,6 @@ footer p{font-size:13px;color:var(--text-dim);}
 .result-body{color:var(--text-main);font-size:16px;line-height:1.85;font-weight:300;white-space:pre-wrap;}
 .result-actions{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap;}
 .btn-share{flex:1;min-width:140px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);color:var(--text-sub);padding:14px;border-radius:12px;font-size:14px;cursor:pointer;transition:all 0.2s;font-family:inherit;}
-.btn-share:hover{border-color:rgba(255,255,255,0.25);color:var(--text-main);}
 .btn-compat{flex:1;min-width:140px;background:var(--rose-dim);border:1px solid rgba(232,105,138,0.3);color:var(--rose-light);padding:14px;border-radius:12px;font-size:14px;cursor:pointer;transition:all 0.2s;font-family:inherit;font-weight:500;}
 .error-box{background:rgba(255,80,80,0.08);border:1px solid rgba(255,80,80,0.2);border-radius:16px;padding:20px 24px;color:#ff9090;font-size:14px;display:none;margin-top:16px;line-height:1.6;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
@@ -134,7 +127,6 @@ footer p{font-size:13px;color:var(--text-dim);}
   </div>
 </nav>
 
-<!-- LANDING -->
 <div id="page-landing" class="page active">
   <section id="hero">
     <div class="hero-inner">
@@ -148,7 +140,6 @@ footer p{font-size:13px;color:var(--text-dim);}
     </div>
     <div class="scroll-hint"><span>스크롤</span><div class="scroll-arrow"></div></div>
   </section>
-
   <section id="features">
     <div class="container">
       <div class="features-header reveal">
@@ -178,7 +169,6 @@ footer p{font-size:13px;color:var(--text-dim);}
       </div>
     </div>
   </section>
-
   <section id="signup">
     <div class="container">
       <div class="signup-box reveal">
@@ -193,7 +183,6 @@ footer p{font-size:13px;color:var(--text-dim);}
       </div>
     </div>
   </section>
-
   <footer>
     <div class="inner">
       <div class="logo">찐<span style="color:var(--rose)">연</span></div>
@@ -202,7 +191,6 @@ footer p{font-size:13px;color:var(--text-dim);}
   </footer>
 </div>
 
-<!-- SAJU PAGE -->
 <div id="page-saju" class="page">
   <div class="saju-wrap">
     <div class="saju-header">
@@ -280,21 +268,18 @@ for(let i=0;i<120;i++){
   s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--o:${Math.random()*0.5+0.1};--d:${Math.random()*4+2}s;animation-delay:${Math.random()*5}s;`;
   sf.appendChild(s);
 }
-
 function showPage(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
   if(name==='landing')initReveal();
 }
-
 let selectedGender='';
 function selectGender(g){
   selectedGender=g;
   document.querySelectorAll('.gender-btn').forEach(b=>b.classList.remove('selected'));
   document.getElementById('btn-'+g).classList.add('selected');
 }
-
 async function getSaju(){
   const name=document.getElementById('userName').value.trim()||'당신';
   const birth=document.getElementById('birthDate').value;
@@ -334,7 +319,6 @@ async function getSaju(){
 (짧고 인상적인 조언 한 문장)
 
 사주 명식의 천간지지를 간략히 언급하고, ${name}님에게 맞춤화된 느낌이 들도록 이름을 자연스럽게 넣어주세요.`;
-
   try{
     const res=await fetch('/api/saju',{
       method:'POST',
@@ -343,21 +327,19 @@ async function getSaju(){
     });
     if(!res.ok){const err=await res.json();throw new Error(err.error||`오류 ${res.status}`);}
     const data=await res.json();
-    const text=data.content[0].text;
-    showResult(name,birth,text,gender);
+    if(!data.text)throw new Error('응답 데이터가 없습니다');
+    showResult(name,birth,data.text,gender);
   }catch(e){
     showError(`오류가 발생했습니다: ${e.message}`);
   }finally{
     showLoading(false);
   }
 }
-
 function showLoading(show){
   document.getElementById('loadingBox').style.display=show?'block':'none';
   document.getElementById('sajuBtn').disabled=show;
   document.getElementById('sajuBtn').textContent=show?'분석 중...':'🔮 오늘의 운세 보기';
 }
-
 function showResult(name,birth,text,gender){
   const card=document.getElementById('resultCard');
   const emojis=['🔮','🌙','⭐','🌸','✨','🌺'];
@@ -369,23 +351,19 @@ function showResult(name,birth,text,gender){
   const birthYear=new Date(birth).getFullYear();
   const animals={0:'원숭이',1:'닭',2:'개',3:'돼지',4:'쥐',5:'소',6:'호랑이',7:'토끼',8:'용',9:'뱀',10:'말',11:'양'};
   tags.push(animals[(birthYear-4)%12]+'띠');
-  const tagsEl=document.getElementById('resultTags');
-  tagsEl.innerHTML=tags.map((t,i)=>`<span class="result-tag${i>1?' gold':''}">${t}</span>`).join('');
+  document.getElementById('resultTags').innerHTML=tags.map((t,i)=>`<span class="result-tag${i>1?' gold':''}">${t}</span>`).join('');
   document.getElementById('resultBody').textContent=text;
   card.style.display='block';
   card.scrollIntoView({behavior:'smooth',block:'start'});
 }
-
 function hideResult(){document.getElementById('resultCard').style.display='none';}
 function showError(msg){const e=document.getElementById('errorBox');e.textContent=msg;e.style.display='block';}
 function hideError(){document.getElementById('errorBox').style.display='none';}
-
 function shareResult(){
   const text=`찐연에서 오늘의 사주 봤어요 🔮\njjinyeon.com`;
   if(navigator.share){navigator.share({title:'찐연 - 오늘의 사주',text,url:'https://jjinyeon.com'});}
   else{navigator.clipboard.writeText(text).then(()=>alert('클립보드에 복사됐어요! 카카오톡에 붙여넣기 하세요 📋'));}
 }
-
 function handleSignup(e){
   e.preventDefault();
   const email=document.getElementById('emailInput').value;
@@ -394,7 +372,6 @@ function handleSignup(e){
   note.style.color='#e8698a';
   document.getElementById('emailInput').value='';
 }
-
 function initReveal(){
   const obs=new IntersectionObserver(entries=>{
     entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*80);});
