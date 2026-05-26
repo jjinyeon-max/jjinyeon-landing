@@ -24,17 +24,13 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
-
     if (data.type === 'error') {
       return res.status(200).json({ text: `오류: ${data.error?.message || '알 수 없는 오류'}` });
     }
-
     if (data.content && data.content[0] && data.content[0].text) {
       return res.status(200).json({ text: data.content[0].text });
     }
-
     return res.status(200).json({ text: JSON.stringify(data) });
-
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
